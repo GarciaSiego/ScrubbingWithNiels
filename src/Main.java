@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.Semaphore;
 
-import static java.util.concurrent.*;
-
 /**
  * http://jaunt-api.com/jaunt-tutorial.htm
  */
