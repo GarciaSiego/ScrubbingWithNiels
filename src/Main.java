@@ -32,6 +32,12 @@ public class Main {
                     Element div2 = userAgent2.doc.findEach("<div class=\"address_row\">");
                     Element div3 = div2.findFirst("<span class=\"address_content\">");
                     System.out.println(div3.getChildText().trim()); //STREET NAME
+
+                    Element span = div2.getElement(1);
+                    Element span2 = span.getFirst("<span>");
+                    Elements spans = span2.getEach("<span>");
+                    System.out.println(spans.getElement(0).getChildText()); // postcode
+                    System.out.println(spans.getElement(1).getChildText()); // dorp
                     userAgent2.close();
 
 //                    writer.println(p.getChildText() + "," + company.getChildText() + "," + url);
