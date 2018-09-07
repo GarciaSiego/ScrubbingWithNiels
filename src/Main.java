@@ -18,6 +18,9 @@ public class Main {
                 for(Element div : divs){
                     Element p = div.findFirst("<p class=\"description\">");
                     System.out.println("Title:" + p.getChildText());//join child text of body element
+                    // get url link
+                    Element href = div.findFirst("<a href=\"");
+
                 }
             }
         }
