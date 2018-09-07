@@ -80,7 +80,6 @@ public class Main {
                         synchronized (writer){
                             writer.println(line);
                         }
-                        writer.close();
                     }
                 } catch (JauntException | IOException e) {         //if an HTTP/connection error occurs, handle JauntException.
                     System.err.println(e);
