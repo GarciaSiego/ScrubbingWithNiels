@@ -10,7 +10,7 @@ public class Example3{
       userAgent.openContent("<html><body>WebPage <div>Hobbies:<p>beer<p>skiing</div> Copyright 2013</body></html>");
       Element body = userAgent.doc.findEach("<div class=\"media-body\">>");
       Element div = body.findFirst("<div>");
-      Element p = div.findFirst("<p class=\"description\">")
+      Element p = div.findFirst("<p class=\"description\">");
    
       System.out.println("body's child text: " + p.getChildText());//join child text of body element
     }

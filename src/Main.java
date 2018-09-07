@@ -1,12 +1,11 @@
-import com.jaunt.Element;
-import com.jaunt.Elements;
-import com.jaunt.JauntException;
-import com.jaunt.UserAgent;
+import com.jaunt.*;
 
 public class Main {
 
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws ResponseException {
+//        UserAgent userAgent = new UserAgent();
+//        userAgent.visit("https://www.detelefoongids.nl/pharmades-apotheek-hoogerheide/11421611/5-1/");                        //visit a url
+//        System.out.println(userAgent.doc.innerHTML());
         run();
     }
 
