@@ -13,9 +13,15 @@ public class Main {
                 Elements divs = userAgent.doc.findEach("<div class=\"media-body\">");
                 for (Element div : divs) {
                     Element p = div.findFirst("<p class=\"description\">");
-                    System.out.println("Title:" + p.getChildText());//join child text of body element
+                    System.out.println(p.getChildText());
                     // get url link
-//                    Element href = div.findFirst("<a href=\"");
+                    Element h = div.getFirst("<h4 class=\"media-heading title orange\">");
+                    Element href = h.getFirst("<a href");
+                    String url = href.toString();
+                    url = url.substring(9,url.length() -2);
+                    Element company = h.getFirst("<a href=\"" + url + "\">");
+                    System.out.println(url);
+                    System.out.println(company.getChildText());
 
                 }
             }
