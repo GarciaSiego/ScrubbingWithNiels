@@ -13,30 +13,45 @@ public class Main {
 
     private static Semaphore semaphore;
 
+    private static Semaphore semaphore2;
+
+    private static int curr;
+
+    private static int count;
+
     public static void main(String[] args) {
         semaphore = new Semaphore(1);
+        semaphore2 = new Semaphore(1);
 
         try {
 
             writer = new PrintWriter("output.csv", "UTF-8");
 
             for (int i = 1; i < 2399; i++) {
+
+                semaphore2.acquire();
+                curr = i;
+
                 new Thread(() -> {
                     try {
+
+                        int curr2 = curr;
+                        semaphore2.release();
+
                         UserAgent userAgent = new UserAgent(); //create new userAgent (headless browser).
 
                         boolean success = false;
 
                         while (!success) {
                             try {
-                                userAgent.visit("https://www.zorgkaartnederland.nl/zorginstelling/pagina" + i + "?sort=naam-asc");
+                                userAgent.visit("https://www.zorgkaartnederland.nl/zorginstelling/pagina" + curr2 + "?sort=naam-asc");
                                 success = true;
                             } catch (JauntException e) {         //if an HTTP/connection error occurs, handle JauntException.
                                 System.err.println(e.getMessage());
                             }
                         }
 
-                        userAgent.visit("https://www.zorgkaartnederland.nl/zorginstelling/pagina" + i + "?sort=naam-asc");
+                        userAgent.visit("https://www.zorgkaartnederland.nl/zorginstelling/pagina" + curr2 + "?sort=naam-asc");
                         Elements divs = userAgent.doc.findEach("<div class=\"media-body\">");
                         for (Element div : divs) {
                             Element p = div.findFirst("<p class=\"description\">");
@@ -83,6 +98,8 @@ public class Main {
                             semaphore.release();
 
                             userAgent2.close();
+
+                            count++;
                         }
                     } catch (JauntException | IOException | InterruptedException e) { //if an HTTP/connection error occurs, handle JauntException.
                         System.err.println(e.getMessage());
@@ -90,7 +107,12 @@ public class Main {
                 }).start();
             }
 
-            writer.close();
+            new Thread(() -> {
+                while (count < 2399) {
+                    writer.close();
+                }
+            }).start();
+
 
         } catch (Exception e) { //if an HTTP/connection error occurs, handle JauntException.
             System.err.println(e.getMessage());
