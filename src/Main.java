@@ -1,11 +1,13 @@
 import com.jaunt.*;
 
+import java.io.IOException;
+
 /**
  * http://jaunt-api.com/jaunt-tutorial.htm
  */
 public class Main {
 
-    public static void main(String[] args) throws ResponseException {
+    public static void main(String[] args) throws ResponseException, IOException {
         try {
             UserAgent userAgent = new UserAgent();                       //create new userAgent (headless browser).
             for (int i = 1; i < 2; i++) {
@@ -22,8 +24,18 @@ public class Main {
                     Element company = h.getFirst("<a href=\"" + url + "\">");
                     System.out.println(url);
                     System.out.println(company.getChildText());
-
+                    UserAgent userAgent2 = new UserAgent();
+                    userAgent2.visit(url);
+                    Element span = userAgent2.doc.findEach("<span class=\"address_content\">");
+                    System.out.println(span.getChildText());
+                    Elements spans = userAgent2.doc.findEach("<div class=\"address_row\">");
+                    for (Element span2: spans){
+                        System.out.println(span2.getChildText());
+                    }
+                    userAgent2.close();
                 }
+
+
             }
         } catch (JauntException e) {         //if an HTTP/connection error occurs, handle JauntException.
             System.err.println(e);
