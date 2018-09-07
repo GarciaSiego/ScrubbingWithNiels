@@ -1,5 +1,8 @@
 import com.jaunt.*;
 
+/**
+ * http://jaunt-api.com/jaunt-tutorial.htm
+ */
 public class Main {
 
     public static void main(String[] args) throws ResponseException {
