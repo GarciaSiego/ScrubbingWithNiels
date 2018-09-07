@@ -19,6 +19,7 @@ public class Main {
                 for (Element div : divs) {
                     Element p = div.findFirst("<p class=\"description\">");
                     System.out.println(p.getChildText()); // Kind of company
+                    writer.print(p.getChildText() + ",");
                     // get url link
                     Element h = div.getFirst("<h4 class=\"media-heading title orange\">");
                     Element href = h.getFirst("<a href");
@@ -26,21 +27,22 @@ public class Main {
                     url = url.substring(9, url.length() - 2);
                     Element company = h.getFirst("<a href=\"" + url + "\">");
                     System.out.println(company.getChildText()); // Company name
+                    writer.print(company.getChildText() + ",");
                     // Adress url info
                     UserAgent userAgent2 = new UserAgent();
                     userAgent2.visit(url);
                     Element div2 = userAgent2.doc.findEach("<div class=\"address_row\">");
                     Element div3 = div2.findFirst("<span class=\"address_content\">");
                     System.out.println(div3.getChildText().trim()); //STREET NAME
+                    writer.print(div3.getChildText().trim() + ",");
 
                     Element span = div2.getElement(1);
                     Element span2 = span.getFirst("<span>");
                     Elements spans = span2.getEach("<span>");
                     System.out.println(spans.getElement(0).getChildText()); // postcode
                     System.out.println(spans.getElement(1).getChildText()); // dorp
+                    writer.println(spans.getElement(0).getChildText() + "," + spans.getElement(1).getChildText());
                     userAgent2.close();
-
-//                    writer.println(p.getChildText() + "," + company.getChildText() + "," + url);
                 }
             }
 
