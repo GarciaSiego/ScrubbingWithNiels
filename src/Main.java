@@ -18,26 +18,23 @@ public class Main {
                 Elements divs = userAgent.doc.findEach("<div class=\"media-body\">");
                 for (Element div : divs) {
                     Element p = div.findFirst("<p class=\"description\">");
-                    System.out.println(p.getChildText());
+                    System.out.println(p.getChildText()); // Kind of company
                     // get url link
                     Element h = div.getFirst("<h4 class=\"media-heading title orange\">");
                     Element href = h.getFirst("<a href");
                     String url = href.toString();
                     url = url.substring(9, url.length() - 2);
                     Element company = h.getFirst("<a href=\"" + url + "\">");
-                    System.out.println(url);
-                    System.out.println(company.getChildText());
+                    System.out.println(company.getChildText()); // Company name
+                    // Adress url info
                     UserAgent userAgent2 = new UserAgent();
                     userAgent2.visit(url);
-                    Element span = userAgent2.doc.findEach("<span class=\"address_content\">");
-                    System.out.println(span.getChildText());
-                    Elements spans = userAgent2.doc.findEach("<div class=\"address_row\">");
-                    for (Element span2 : spans) {
-                        System.out.println(span2.getChildText());
-                    }
+                    Element div2 = userAgent2.doc.findEach("<div class=\"address_row\">");
+                    Element div3 = div2.findFirst("<span class=\"address_content\">");
+                    System.out.println(div3.getChildText().trim()); //STREET NAME
                     userAgent2.close();
 
-                    writer.println(p.getChildText() + "," + company.getChildText() + "," + url);
+//                    writer.println(p.getChildText() + "," + company.getChildText() + "," + url);
                 }
             }
 
